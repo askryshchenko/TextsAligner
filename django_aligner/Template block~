@@ -1,0 +1,13 @@
+
+{% for paragraph in paragraph_data_list %}
+    <p>
+
+    {% for sent in paragraph %}
+        <a href=""  rel="clickover" data-content="{{ sent.target_sentence }}"> {{ sent.source_sentence }}</a>
+    {% endfor %}
+
+    </p>
+
+
+
+{% endfor %}

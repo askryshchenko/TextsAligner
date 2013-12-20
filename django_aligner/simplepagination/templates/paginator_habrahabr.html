@@ -1,0 +1,34 @@
+{% load paginator %}
+
+<div class="habrahabr-page-nav">
+<ul class="habrahabr-next-prev">
+    {% if paginator.prev %}
+    <li>← <a href="{% page_link paginator.prev paginator.params paginator.anchor %}" class="next" title="Move to prev page">this way</a></li>
+    {% else %}
+    <li>← this way</li>
+    {% endif %}
+    {% if paginator.next %}
+    <li><a href="{% page_link paginator.next paginator.params paginator.anchor %}" class="next" title="Move to next page">there</a> →</li>
+    {% else %}
+    <li>there →</li>
+    {% endif %}
+
+</ul>
+
+
+<ul id="habrahabr-pages">
+{% if paginator.first %}
+    <li><a href="{% page_link paginator.first paginator.params paginator.anchor %}" title="First page">1 ←</a></li>
+{% endif %}
+{% for i in paginator.pages %}
+    {% ifequal i paginator.current_page %}
+    <li><em>{{ i }}</em></li>
+    {% else %}
+    <li><a href="{% page_link i paginator.params paginator.anchor %}">{{ i }}</a></li>
+    {% endifequal %}
+{% endfor %}
+{% if paginator.last %}
+    <li><a href="{% page_link paginator.last paginator.params paginator.anchor %}" title="Last page">→ {{ paginator.number_of_pages }}</a></li>
+{% endif %}
+</ul>
+</div>

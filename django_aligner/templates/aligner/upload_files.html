@@ -1,0 +1,79 @@
+{% extends 'aligner/base.html' %}
+        {% block content %}
+
+
+            <h1>Upload Text files</h1>
+
+            <br>
+            <blockquote>
+            <p>
+                Upload source and target text files. Support .txt format.<br>
+            </p>
+            <p>
+                Target file must consist translate of source file.
+            </p>
+            <p>
+                If files cut to chapter then title must be in upper case or in title format( All word in title must begin from upper symbol).
+            </p>
+            </blockquote>
+            <br>
+
+                <!-- List of uploaded documents -->
+
+                <!-- Upload form. Note enctype attribute! -->
+            <div class="file_upload_form">
+                <form class="form-horizontal" action="{% url "upload_files" %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="control-group">
+                        <p>{{ form.non_field_errors }}</p>
+                    </div>
+
+                    <div class="control-group">
+                        <p>{{ form.source_file.label_tag }} {{ form.source_file.help_text }}</p>
+                        <p>
+                        <div class="controls">
+                                {{ form.source_file.errors }}
+                                {{ form.source_file }}
+                        </div>
+                        </p>
+                    </div>
+
+                    <div class="control-group">
+                        <p>{{ form.target_file.label_tag }} {{ form.target_file.help_text }}</p>
+                        <p>
+                        <div class="controls">
+                                {{ form.target_file.errors }}
+                                {{ form.target_file }}
+                        </div>
+                        </p>
+                    </div>
+
+                    <div class="control-group">
+                        <p>
+                           <label class="control-label">
+                               Book name:
+                           </label>
+                        </p>
+                        <p>
+                        <div class="controls">
+                            {{ form.book_name }}
+                        </div>
+                        </p>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <p><input type="submit"  value="Upload" /></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+
+
+
+
+
+
+
+        {%  endblock %}

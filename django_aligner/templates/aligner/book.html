@@ -1,0 +1,258 @@
+{% extends 'aligner/base.html' %}
+
+{% block extrahead %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.2/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrapx-clickover.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap-tab.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div id="content-book">
+
+<script type="text/javascript">
+     $(function() { $('[rel="clickover"]').clickover({ placement: 'top' }); })
+</script>
+
+
+<!-- Create array of matching sentences -->
+
+<script type="text/javascript" >
+    var matching_list = []
+    {% for match in paginator.matching_list %}
+        var match_list = []
+        {% for ind in match %}
+
+            var ind_list = []
+            {% for elem in ind %}
+                ind_list.push( "{{ elem }}" )
+            {% endfor %}
+            match_list.push( ind_list )
+
+        {% endfor %}
+        matching_list.push( match_list )
+
+    {% endfor %}
+
+</script>
+
+
+
+<p>
+    {% include paginator.template %}
+</p>
+
+
+{% for texts_block in object_list %}
+
+
+
+<!-------->
+<div id="content_tab">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#source_tab" data-toggle="tab">Source Text</a></li>
+        <li><a href="#target_tab" data-toggle="tab">Target Text</a></li>
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="source_tab">
+
+
+            {% for paragraph in texts_block.source_data %}
+
+            <p>
+
+                {% for sent in paragraph %}
+                    <a class="source"  id={{ sent.class_id }}  > {{ sent.data }}</a>
+                {% endfor %}
+
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="tab-pane" id="target_tab">
+
+                {% for paragraph in texts_block.target_data %}
+
+                <p>
+
+                  {% for sent in paragraph %}
+                        <a class="target"  id={{ sent.class_id }} > {{ sent.data }}</a>
+                  {% endfor %}
+
+                </p>
+
+                {% endfor %}
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+    <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"> Fragments of Texts </h4>
+      </div >
+
+      <div class = "container" >
+      <div class = "row" >
+
+        <div class="col-md-4" >
+
+        <div class="modal-body" id="source_body_id">
+            <div class="modal-header">
+                <h5 class="modal-title" > Source Text </h5>
+            </div>
+          <div id="source_top_text">
+
+          </div>
+
+          <div id="source_center_text">
+
+          </div>
+
+          <div id="source_down_text">
+
+          </div>
+
+        </div>
+
+        </div>
+
+        <div class="col-md-4" >
+        <div class="modal-body" id="source_body_id">
+            <div class="modal-header">
+                <h5 class="modal-title" > Target Text </h5>
+            </div>
+          <div id="target_top_text">
+
+          </div>
+
+          <div id="target_center_text">
+
+          </div>
+
+          <div id="target_down_text">
+
+          </div>
+          </div>
+
+        </div>
+       </div>
+      </div>
+
+
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+    <script type="text/javascript">
+
+    var NUM_SHOW_SENTENCES = 3
+
+    function target_content_str( sent_ind ) {
+        var content_str = '';
+        for ( var l = 0 ; l < matching_list[ sent_ind ][ 1 ].length; l++ ) {
+            content_str = content_str  + $( '#target_' + matching_list[ sent_ind ][ 1 ][ l ]).text();
+        }
+        return content_str;
+    }
+
+    function source_content_str( sent_ind ) {
+        var content_str = '';
+        for ( var l = 0 ; l < matching_list[ sent_ind ][ 0 ].length; l++ ) {
+            content_str = content_str  + $( '#source_' + matching_list[ sent_ind ][ 0 ][ l ]).text();
+        }
+        return content_str;
+    }
+
+
+    $('.source').click( function( eventObject  ) {
+
+        var current_id = $(this).attr('id');
+
+        for( var i = 0; i < matching_list.length; i++ ) {
+
+            for ( var j = 0 ; j < matching_list[i][0].length; j++ ) {
+
+                if( current_id == "source_" + matching_list[i][0][j] ) {
+
+                    var str_source = source_content_str( i )
+
+                    var str_source_top = ""
+                    for( var k = i - 1 ; ( k >= i - NUM_SHOW_SENTENCES ) && ( k >= 0 ) ; k-- ) {
+                        str_source_top = source_content_str( k ) + str_source_top
+                    }
+
+                    var str_source_down = ""
+                    for( var k = i + 1 ; ( k <= i + NUM_SHOW_SENTENCES ) && ( k < matching_list.length ) ; k++ ) {
+                        str_source_down = source_content_str( k ) + str_source_down
+                    }
+
+                    var str_target = target_content_str( i );
+
+                    var str_target_top = ""
+                    for( var k = i - 1 ; ( k >= i - NUM_SHOW_SENTENCES ) && ( k >= 0 ) ; k-- ) {
+                        str_target_top = target_content_str( k ) + str_target_top
+                    }
+
+                    var str_target_down = ""
+                    for( var k = i + 1 ; ( k <= i + NUM_SHOW_SENTENCES ) && ( k < matching_list.length ) ; k++ ) {
+                        str_target_down = target_content_str( k ) + str_target_down
+                    }
+
+                    //$( '#myModalLabel').text( str_source );
+
+                    $( '#source_center_text').text( str_source );
+                    $( '#source_top_text').text( str_source_top );
+                    $( '#source_down_text').text( str_source_down );
+
+                    $( '#target_center_text').text( str_target );
+                    $( '#target_top_text').text( str_target_top );
+                    $( '#target_down_text').text( str_target_down );
+
+                    $('#myModal').modal('show')
+                    return 0
+                    //alert( str_ind )
+                }
+
+            }
+        }
+
+    });
+
+    </script>
+
+
+
+
+
+
+{% endfor %}
+
+
+<p>
+    {% include paginator.template %}
+</p>
+
+</div>
+
+
+
+{%  endblock %}

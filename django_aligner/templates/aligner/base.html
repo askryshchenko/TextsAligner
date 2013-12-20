@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>Texts Aligner</title>
+        <link href="{{STATIC_URL}}paginator.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}paginator_habrahabr.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="{{STATIC_URL}}aligner_style.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <link href="{{STATIC_URL}}bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="{{STATIC_URL}}bootstrap/js/bootstrap.js" type="text/javascript"></script>
+        {% block extrahead %}
+        {% endblock %}
+        <script type="text/javascript">
+        $(function(){
+        {% block jquery %}
+        {% endblock %}
+        });
+        </script>
+    </head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-fixed-top .navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Texts Aligner</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+                <li><a href="/upload_files/">Upload new file</a></li>
+                <li><a href="/book_list_view/">Library</a></li>
+                <li><a href="">Source Code</a></li>
+                <li><a href="">About project</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="wrap">
+  <div id="main" class="container clear-top">
+    <div class="container">
+     {% block content %}Empty page{% endblock %}
+    </div> <!-- container -->
+  </div>
+</div>
+
+
+<footer class="panel-footer" id="footer" >
+    <a href="" id="footer-text">
+        SpbAU © 2013
+    </a>
+
+</footer>
+
+
+</body>
+
+</html>

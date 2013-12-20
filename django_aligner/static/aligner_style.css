@@ -1,0 +1,93 @@
+.file_upload_form label {
+    color: #6DA3BD;
+    font-weight: normal;
+}
+
+h1 {
+    color: #6DA3BD;
+    font-weight: normal;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+
+  padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
+
+#footer {
+  position: relative;
+  margin-top: -50px; /* negative value of footer height */
+  height: 50px;
+  clear:both;
+  padding-top:20px;
+  text-align: center;
+  color: #6DA3BD;
+
+}
+
+
+#target_center_text{
+
+    color: #6DA3BD;
+}
+
+
+#source_center_text{
+
+    color: #6DA3BD;
+}
+
+
+.col-md-4 {
+    width: 500px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.modal-dialog {
+    width: 1000px;
+}
+
+.modal-header{
+    text-align: center;
+    color: #6DA3BD;
+    margin-bottom: 10px;
+
+}
+
+#myModalFooter {
+    border-top: none;
+}
+
+.Book-List {
+    margin-top: 30px;
+    margin-left: 50px
+}
+
+#main {
+    margin-left: 100px;
+}
+
+#my-tab-content {
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.btn{
+    background-color: #6DA3BD;
+    background-image: -moz-linear-gradient(center top , #6DA3BD, #6DA3BD);
+    background-image: -webkit-linear-gradient(top, #6DA3BD, #6DA3BD);
+    background-image: -o-linear-gradient(top, #6DA3BD, #6DA3BD);
+
+}

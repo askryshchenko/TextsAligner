@@ -1,0 +1,31 @@
+{% extends 'aligner/base.html' %}
+
+{% block extrahead %}
+
+
+
+{% endblock %}
+
+{% block content %}
+
+
+<h1>Uploaded Books:</h1>
+
+<div class="Book-List">
+    <ul>
+    {% for book in object_list %}
+
+                <li>
+                    <h4>
+                    <a href="/book_view/{{ book.pk }}" >{{ book.book_name }}</a>
+                    </h4>
+                </li>
+
+    {% endfor %}
+    </ul>
+</div>
+
+
+
+
+{% endblock %}
